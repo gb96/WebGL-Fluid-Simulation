@@ -191,8 +191,8 @@ function startGUI () {
     gui.add(config, 'PAUSED').name('paused').listen();
 
     gui.add({ fun: () => {
-        splatStack.push(parseInt(Math.random() * 20) + 5);
-    } }, 'fun').name('Random splats');
+        splatStack.push();
+    } }, 'fun').name('DST splats');
 
     let bloomFolder = gui.addFolder('Bloom');
     bloomFolder.add(config, 'BLOOM').name('enabled').onFinishChange(updateKeywords);
@@ -1381,17 +1381,51 @@ function splatPointer (pointer) {
 }
 
 function multipleSplats (amount) {
-    for (let i = 0; i < amount; i++) {
-        const color = generateColor();
-        color.r *= 10.0;
-        color.g *= 10.0;
-        color.b *= 10.0;
-        const x = Math.random();
-        const y = Math.random();
-        const dx = 1000 * (Math.random() - 0.5);
-        const dy = 1000 * (Math.random() - 0.5);
-        splat(x, y, dx, dy, color);
+    splatDST();
+//     for (let i = 0; i < amount; i++) {
+//         const color = generateColor();
+//         color.r *= 10.0;
+//         color.g *= 10.0;
+//         color.b *= 10.0;
+//         const x = Math.random();
+//         const y = Math.random();
+//         const dx = 1000 * (Math.random() - 0.5);
+//         const dy = 1000 * (Math.random() - 0.5);
+//         splat(x, y, dx, dy, color);
+//     }
+}
+
+function splatDST () {
+    let kerning = 0.15;
+
+    const x = 0.1 + 0.1*Math.random();
+    const y = 0.9 - 0.1*Math.random();
+    
+    // D
+    let r1 = 0.25;
+    for (let i = 0; i < 6; i++)
+        splat(x, y - 2 * r1 * i / 6 + r1, 0, -5, pointer.color);
+    for (let a = 0; a < Math.PI; a += Math.PI/8) {
+        let b = a - 2 * Math.PI/5;
+        splat(x + r1*Math.cos(b), y + r1*Math.sin(b), 4*Math.sin(b), -4*Math.cos(b), pointer.color);
     }
+
+    // S
+    let r2 = 0.5 * r1;
+    for (let a = 0; a < 3 * Math.PI / 2; a += Math.PI/8) {
+        let b = -a - 4 * Math.PI/5;
+        splat(x + kerning + r1 + r2/2 + r2*Math.cos(b), y + r2 + r2*Math.sin(b), -4*Math.sin(b), 4*Math.cos(b), pointer.color);
+    }
+    for (let a = 0; a < 3* Math.PI / 2; a += Math.PI/8) {
+        let b = a - 4 * Math.PI/5;
+        splat(x + kerning + r1 + r2*Math.cos(b), y - r2 + r2*Math.sin(b), 4*Math.sin(b), -4*Math.cos(b), pointer.color);
+    }
+
+    // T 
+    for (let i = 0; i < 6; i++)
+        splat(x + 2*kerning + 2*r1, y - 2 * r1 * i / 6, 0, 5, pointer.color); 
+    splat(x + 1.9*kerning + 1.8*r1, y + r2, -12, 0, pointer.color); 
+    splat(x + 1.9*kerning + 2.2*r1, y + r2, 12, 0, pointer.color); 
 }
 
 function splat (x, y, dx, dy, color) {
