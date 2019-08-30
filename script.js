@@ -1397,7 +1397,10 @@ function multipleSplats (amount) {
 
 function splatDST () {
     let kerning = 0.15;
-
+    const color = generateColor();
+    color.r *= 10.0;
+    color.g *= 10.0;
+    color.b *= 10.0;
     const x = 0.1 + 0.1*Math.random();
     const y = 0.9 - 0.1*Math.random();
     
@@ -1407,25 +1410,25 @@ function splatDST () {
         splat(x, y - 2 * r1 * i / 6 + r1, 0, -5, pointer.color);
     for (let a = 0; a < Math.PI; a += Math.PI/8) {
         let b = a - 2 * Math.PI/5;
-        splat(x + r1*Math.cos(b), y + r1*Math.sin(b), 4*Math.sin(b), -4*Math.cos(b), pointer.color);
+        splat(x + r1*Math.cos(b), y + r1*Math.sin(b), 4*Math.sin(b), -4*Math.cos(b), color);
     }
 
     // S
     let r2 = 0.5 * r1;
     for (let a = 0; a < 3 * Math.PI / 2; a += Math.PI/8) {
         let b = -a - 4 * Math.PI/5;
-        splat(x + kerning + r1 + r2/2 + r2*Math.cos(b), y + r2 + r2*Math.sin(b), -4*Math.sin(b), 4*Math.cos(b), pointer.color);
+        splat(x + kerning + r1 + r2/2 + r2*Math.cos(b), y + r2 + r2*Math.sin(b), -4*Math.sin(b), 4*Math.cos(b), color);
     }
     for (let a = 0; a < 3* Math.PI / 2; a += Math.PI/8) {
         let b = a - 4 * Math.PI/5;
-        splat(x + kerning + r1 + r2*Math.cos(b), y - r2 + r2*Math.sin(b), 4*Math.sin(b), -4*Math.cos(b), pointer.color);
+        splat(x + kerning + r1 + r2*Math.cos(b), y - r2 + r2*Math.sin(b), 4*Math.sin(b), -4*Math.cos(b), color);
     }
 
     // T 
     for (let i = 0; i < 6; i++)
-        splat(x + 2*kerning + 2*r1, y - 2 * r1 * i / 6, 0, 5, pointer.color); 
-    splat(x + 1.9*kerning + 1.8*r1, y + r2, -12, 0, pointer.color); 
-    splat(x + 1.9*kerning + 2.2*r1, y + r2, 12, 0, pointer.color); 
+        splat(x + 2*kerning + 2*r1, y - 2 * r1 * i / 6, 0, 5, color); 
+    splat(x + 1.9*kerning + 1.8*r1, y + r2, -12, 0, color); 
+    splat(x + 1.9*kerning + 2.2*r1, y + r2, 12, 0, color); 
 }
 
 function splat (x, y, dx, dy, color) {
