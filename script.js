@@ -1402,7 +1402,7 @@ function splatDST () {
     color.g *= 10.0;
     color.b *= 10.0;
     const x = 0.1 + 0.1*Math.random();
-    const y = 0.9 - 0.1*Math.random();
+    const y = 0.5 + 0.1*Math.random();
     
     // D
     let r1 = 0.25;
