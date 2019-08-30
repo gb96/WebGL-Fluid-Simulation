@@ -1407,7 +1407,7 @@ function splatDST () {
     // D
     let r1 = 0.25;
     for (let i = 0; i < 6; i++)
-        splat(x, y - 2 * r1 * i / 6 + r1, 0, -5, pointer.color);
+        splat(x, y - 2 * r1 * i / 6 + r1, 0, -5, color);
     for (let a = 0; a < Math.PI; a += Math.PI/8) {
         let b = a - 2 * Math.PI/5;
         splat(x + r1*Math.cos(b), y + r1*Math.sin(b), 4*Math.sin(b), -4*Math.cos(b), color);
